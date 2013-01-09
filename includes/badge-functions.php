@@ -5,7 +5,7 @@ function cgc_ub_get_badges() {
 		switch_to_blog(1);
 	}
 	$badges = get_option('cgc_ub_badges');
-	if(false === $badges) { 
+	if(false === $badges) {
 		add_option('cgc_ub_badges');
 	}
 	if(is_multisite()) {
@@ -25,7 +25,7 @@ function cgc_ub_get_badge($id) {
 	if($badges) {
 		$badge = isset($badges[$id]) ? $badges[$id] : false;
 	}
-	
+
 	if(is_multisite()) {
 		restore_current_blog();
 	}
@@ -46,7 +46,7 @@ function cgc_ub_get_conditional_badges() {
 			return $conditional_badges;
 		}
 	}
-		
+
 	return false;
 }
 
@@ -86,21 +86,21 @@ function edd_store_badge($badge_details, $id = null) {
 	if(edd_badge_exists($id) && !is_null($id)) { // update an existing discount
 		$badges = cgc_ub_get_badges();
 		if(!$badges) $badges = array();
-		$badges[$id] = $badge_details;		
+		$badges[$id] = $badge_details;
 		update_option('cgc_ub_badges', $badges);
-		
+
 		return true; // badge updated
-		
+
 	} else { // add the badge
 		$badges = cgc_ub_get_badges();
 		if(!$badges) $badges = array();
 		$badges[] = $badge_details;
-		
+
 		update_option('cgc_ub_badges', $badges);
-		
+
 		return true; // badge updated
 	}
-	
+
 	return false; // something went wrong
 }
 
@@ -115,7 +115,7 @@ add_action('cgc_ub_delete_badge', 'cgc_ub_call_delete');
 function cgc_delete_badge($badge_id) {
 	$badges = cgc_ub_get_badges();
 	if($badges) {
-		unset($badges[$badge_id]);	
+		unset($badges[$badge_id]);
 		update_option('cgc_ub_badges', $badges);
 	}
 }
@@ -124,11 +124,11 @@ function cgc_delete_badge($badge_id) {
 // checks to see if a badge already exists
 function edd_badge_exists($badge_id) {
 	$badges = cgc_ub_get_badges();
-	
+
 	if(!$badges) return false; // no badges, so does not exist
-	
+
 	if(isset($badges[$badge_id])) return true; // a badge with this id has been found
-	
+
 	return false; // no badge with the specified ID exists
 }
 
@@ -257,7 +257,7 @@ add_filter('cgc_ub_is_citizen', 'cgc_ub_condition_is_citizen', 10, 2);
 
 // checks whether as user has had a featured iamge
 function cgc_ub_condition_has_been_featured($return, $user_id) {
-	
+
 	// get all network sites
 	$network_sites = get_transient('cgc_network_sites');
 	if(false === $network_sites) {
@@ -267,11 +267,11 @@ function cgc_ub_condition_has_been_featured($return, $user_id) {
 	//delete_transient('cgc_user_' . $user_id . '_has_been_featured');
 	$featured = false; // user has not been featured by default
 	$featured = get_transient('cgc_user_' . $user_id . '_has_been_featured');
-	if(false === $featured) {		
+	if(false === $featured) {
 		foreach($network_sites as $site) :
 			if(!$featured) {
 				switch_to_blog($site->userblog_id);
-				
+
 				$image_args = array(
 					'author' => $user_id,
 					'post_type' => 'images',
@@ -295,14 +295,14 @@ function cgc_ub_condition_has_been_featured($return, $user_id) {
 	if($featured) {
 		$return = true;
 	}
-	
+
 	return $return;
 }
 add_filter('cgc_ub_has_been_featured', 'cgc_ub_condition_has_been_featured', 10, 2);
 
 // checks whether as user has won  contest
 function cgc_ub_condition_has_won($return, $user_id) {
-	
+
 	// get all network sites
 	$network_sites = get_transient('cgc_network_sites');
 	if(false === $network_sites) {
@@ -312,11 +312,11 @@ function cgc_ub_condition_has_won($return, $user_id) {
 	//delete_transient('cgc_user_' . $user_id . '_has_won');
 	$won = false; // user has not won by default
 	$won = get_transient('cgc_user_' . $user_id . '_has_won');
-	if(false === $won) {	
+	if(false === $won) {
 		foreach($network_sites as $site) :
 			if(!$won) {
 				switch_to_blog($site->userblog_id);
-				
+
 				$image_args = array(
 					'author' => $user_id,
 					'post_type' => 'images',
@@ -345,14 +345,14 @@ function cgc_ub_condition_has_won($return, $user_id) {
 	if($won) {
 		$return = true;
 	}
-	
+
 	return $return;
 }
 add_filter('cgc_ub_has_won', 'cgc_ub_condition_has_won', 10, 2);
 
 // checks whether as user has won second place
 function cgc_ub_condition_got_second($return, $user_id) {
-	
+
 	// get all network sites
 	$network_sites = get_transient('cgc_network_sites');
 	if(false === $network_sites) {
@@ -362,11 +362,11 @@ function cgc_ub_condition_got_second($return, $user_id) {
 	//delete_transient('cgc_user_' . $user_id . '_has_got_second');
 	$won = false; // user has not won by default
 	$won = get_transient('cgc_user_' . $user_id . '_has_got_second');
-	if(false === $won) {	
+	if(false === $won) {
 		foreach($network_sites as $site) :
 			if(!$won) {
 				switch_to_blog($site->userblog_id);
-				
+
 				$image_args = array(
 					'author' => $user_id,
 					'post_type' => 'images',
@@ -395,14 +395,14 @@ function cgc_ub_condition_got_second($return, $user_id) {
 	if($won) {
 		$return = true;
 	}
-	
+
 	return $return;
 }
 add_filter('cgc_ub_got_second', 'cgc_ub_condition_got_second', 10, 2);
 
 // checks whether as user has won third place
 function cgc_ub_condition_got_third($return, $user_id) {
-	
+
 	// get all network sites
 	$network_sites = get_transient('cgc_network_sites');
 	if(false === $network_sites) {
@@ -416,7 +416,7 @@ function cgc_ub_condition_got_third($return, $user_id) {
 		foreach($network_sites as $site) :
 			if(!$won) {
 				switch_to_blog($site->userblog_id);
-				
+
 				$image_args = array(
 					'author' => $user_id,
 					'post_type' => 'images',
@@ -445,14 +445,14 @@ function cgc_ub_condition_got_third($return, $user_id) {
 	if($won) {
 		$return = true;
 	}
-	
+
 	return $return;
 }
 add_filter('cgc_ub_got_third', 'cgc_ub_condition_got_third', 10, 2);
 
 // checks whether as user has won the community vote
 function cgc_ub_condition_won_community_vote($return, $user_id) {
-	
+
 	// get all network sites
 	$network_sites = get_transient('cgc_network_sites');
 	if(false === $network_sites) {
@@ -466,7 +466,7 @@ function cgc_ub_condition_won_community_vote($return, $user_id) {
 		foreach($network_sites as $site) :
 			if(!$won) {
 				switch_to_blog($site->userblog_id);
-				
+
 				$image_args = array(
 					'author' => $user_id,
 					'post_type' => 'images',
@@ -495,7 +495,7 @@ function cgc_ub_condition_won_community_vote($return, $user_id) {
 	if($won) {
 		$return = true;
 	}
-	
+
 	return $return;
 }
 add_filter('cgc_ub_won_community_vote', 'cgc_ub_condition_won_community_vote', 10, 2);
@@ -503,7 +503,7 @@ add_filter('cgc_ub_won_community_vote', 'cgc_ub_condition_won_community_vote', 1
 
 // checks whether a user has ever registered for a workshop
 function cgc_ub_condition_workshop_attendee( $return, $user_id ) {
-	
+
 	$return = false;
 	$attended = false; // user has not attended by default
 	//$attended = get_transient( 'cgc_user_' . $user_id . '_workshop_attendee' );
@@ -519,12 +519,12 @@ function cgc_ub_condition_workshop_attendee( $return, $user_id ) {
 				$attended = true;
 			}
 		restore_current_blog();
-	
+
 		set_transient( 'cgc_user_' . $user_id . '_workshop_attendee', $attended, 7200 );
 	}
 	if( $attended )
 		$return = true;
-	
+
 	return $return;
 }
 add_filter( 'cgc_ub_workshop_attendee', 'cgc_ub_condition_workshop_attendee', 10, 2 );
