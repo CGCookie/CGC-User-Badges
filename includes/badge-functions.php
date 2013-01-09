@@ -145,13 +145,14 @@ function cgc_ub_badge_method_label($method) {
 
 function cgc_ub_get_conditions() {
 	$conditions = apply_filters('cgc_ub_conditions', array(
-			'is_citizen' => __('Is Citizen User', 'cgc_ub'),
-			'has_won' => __('Has Won a Contest', 'cgc_ub'),
-			'got_second' => __('Got Second in a Contest', 'cgc_ub'),
-			'got_third' => __('Got Third in a Contest', 'cgc_ub'),
+			'is_citizen'         => __('Is Citizen User', 'cgc_ub'),
+			'has_won'            => __('Has Won a Contest', 'cgc_ub'),
+			'got_second'         => __('Got Second in a Contest', 'cgc_ub'),
+			'got_third'          => __('Got Third in a Contest', 'cgc_ub'),
 			'won_community_vote' => __('Won the Community Vote', 'cgc_ub'),
-			'has_been_featured' => __('Has Been Featured in Gallery', 'cgc_ub'),
-			'workshop_attendee' => __('Attended a Workshop', 'cgc_ub')
+			'has_been_featured'  => __('Has Been Featured in Gallery', 'cgc_ub'),
+			'workshop_attendee'  => __('Attended a Workshop', 'cgc_ub'),
+			'has_gallery_images' => __('Has Gallery Images', 'cgc_ub')
 		)
 	);
 	return $conditions;
@@ -276,6 +277,10 @@ function cgc_ub_condition_has_been_featured($return, $user_id) {
 					'author' => $user_id,
 					'post_type' => 'images',
 					'posts_per_page' => 1,
+					'fields' => 'ids',
+					'cache_results' => false,
+					'update_post_meta_cache' => false,
+					'update_post_term_cache' => false,
 					'meta_query' => array(
 						array(
 							'key' => 'pig_featured',
@@ -321,6 +326,10 @@ function cgc_ub_condition_has_won($return, $user_id) {
 					'author' => $user_id,
 					'post_type' => 'images',
 					'posts_per_page' => 1,
+					'fields' => 'ids',
+					'cache_results' => false,
+					'update_post_meta_cache' => false,
+					'update_post_term_cache' => false,
 					'meta_query' => array(
 						'relation' => 'AND',
 						array(
@@ -371,6 +380,10 @@ function cgc_ub_condition_got_second($return, $user_id) {
 					'author' => $user_id,
 					'post_type' => 'images',
 					'posts_per_page' => 1,
+					'fields' => 'ids',
+					'cache_results' => false,
+					'update_post_meta_cache' => false,
+					'update_post_term_cache' => false,
 					'meta_query' => array(
 						'relation' => 'AND',
 						array(
@@ -421,6 +434,10 @@ function cgc_ub_condition_got_third($return, $user_id) {
 					'author' => $user_id,
 					'post_type' => 'images',
 					'posts_per_page' => 1,
+					'fields' => 'ids',
+					'cache_results' => false,
+					'update_post_meta_cache' => false,
+					'update_post_term_cache' => false,
 					'meta_query' => array(
 						'relation' => 'AND',
 						array(
@@ -471,6 +488,10 @@ function cgc_ub_condition_won_community_vote($return, $user_id) {
 					'author' => $user_id,
 					'post_type' => 'images',
 					'posts_per_page' => 1,
+					'fields' => 'ids',
+					'cache_results' => false,
+					'update_post_meta_cache' => false,
+					'update_post_term_cache' => false
 					'meta_query' => array(
 						'relation' => 'AND',
 						array(
@@ -499,6 +520,44 @@ function cgc_ub_condition_won_community_vote($return, $user_id) {
 	return $return;
 }
 add_filter('cgc_ub_won_community_vote', 'cgc_ub_condition_won_community_vote', 10, 2);
+
+// checks whether as user has images in the gallery
+function cgc_ub_condition_has_gallery_images($return, $user_id) {
+
+	// get all network sites
+	$network_sites = get_transient('cgc_network_sites');
+	if(false === $network_sites) {
+		$network_sites = get_blogs_of_user(1, false);
+		set_transient('cgc_network_sites', $network_sites, 3600);
+	}
+	$has_images = false;
+	$has_images = get_transient('cgc_user_' . $user_id . '_has_gallery_images');
+	if( false === $has_images ) {
+		foreach($network_sites as $site) :
+			if(!$has_images) {
+				switch_to_blog($site->userblog_id);
+
+				$image_args = array(
+					'author' => $user_id,
+					'post_type' => 'images',
+					'posts_per_page' => 1,
+					'fields' => 'ids',
+					'cache_results' => false,
+					'update_post_meta_cache' => false,
+					'update_post_term_cache' => false
+				);
+				$the_query = new WP_Query($image_args);
+				if($the_query->have_posts()) :
+					$has_images = true;
+				endif;
+				restore_current_blog();
+			}
+		endforeach;
+		set_transient('cgc_user_' . $user_id . '_has_gallery_images', $has_images, 7200);
+	}
+	return $has_images;
+}
+add_filter('cgc_ub_has_gallery_images', 'cgc_ub_condition_has_gallery_images', 10, 2);
 
 
 // checks whether a user has ever registered for a workshop
