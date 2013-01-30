@@ -146,6 +146,7 @@ function cgc_ub_badge_method_label($method) {
 function cgc_ub_get_conditions() {
 	$conditions = apply_filters('cgc_ub_conditions', array(
 			'is_citizen'         => __('Is Citizen User', 'cgc_ub'),
+			'is_author'          => __('Is an Author', 'cgc_ub'),
 			'has_won'            => __('Has Won a Contest', 'cgc_ub'),
 			'got_second'         => __('Got Second in a Contest', 'cgc_ub'),
 			'got_third'          => __('Got Third in a Contest', 'cgc_ub'),
@@ -255,6 +256,15 @@ function cgc_ub_condition_is_citizen($return, $user_id) {
 	return $return;
 }
 add_filter('cgc_ub_is_citizen', 'cgc_ub_condition_is_citizen', 10, 2);
+
+// checks whether a user is an author
+function cgc_ub_condition_is_author($return, $user_id) {
+	if( user_can( $user_id, 'edit_posts' ) ) {
+		$return = true;
+	}
+	return $return;
+}
+add_filter('cgc_ub_is_author', 'cgc_ub_condition_is_author', 10, 2);
 
 // checks whether as user has had a featured iamge
 function cgc_ub_condition_has_been_featured($return, $user_id) {
