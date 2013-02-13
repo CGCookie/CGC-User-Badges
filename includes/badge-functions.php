@@ -631,7 +631,7 @@ function cgc_ub_condition_2_year( $return, $user_id ) {
 
 	return $return;
 }
-add_filter( 'cgc_ub_member_1_years', 'cgc_ub_condition_2_year', 10, 2 );
+add_filter( 'cgc_ub_member_2_years', 'cgc_ub_condition_2_year', 10, 2 );
 
 
 function cgc_ub_condition_3_year( $return, $user_id ) {
@@ -645,7 +645,7 @@ function cgc_ub_condition_3_year( $return, $user_id ) {
 
 	return $return;
 }
-add_filter( 'cgc_ub_member_1_years', 'cgc_ub_condition_3_year', 10, 2 );
+add_filter( 'cgc_ub_member_3_years', 'cgc_ub_condition_3_year', 10, 2 );
 
 
 function cgc_ub_condition_4_year( $return, $user_id ) {
@@ -659,7 +659,7 @@ function cgc_ub_condition_4_year( $return, $user_id ) {
 
 	return $return;
 }
-add_filter( 'cgc_ub_member_1_years', 'cgc_ub_condition_4_year', 10, 2 );
+add_filter( 'cgc_ub_member_4_years', 'cgc_ub_condition_4_year', 10, 2 );
 
 
 function cgc_ub_condition_5_year( $return, $user_id ) {
@@ -673,7 +673,7 @@ function cgc_ub_condition_5_year( $return, $user_id ) {
 
 	return $return;
 }
-add_filter( 'cgc_ub_member_1_years', 'cgc_ub_condition_5_year', 10, 2 );
+add_filter( 'cgc_ub_member_5_years', 'cgc_ub_condition_5_year', 10, 2 );
 
 
 function cgc_ub_condition_6_year( $return, $user_id ) {
@@ -687,7 +687,7 @@ function cgc_ub_condition_6_year( $return, $user_id ) {
 
 	return $return;
 }
-add_filter( 'cgc_ub_member_1_years', 'cgc_ub_condition_6_year', 10, 2 );
+add_filter( 'cgc_ub_member_6_years', 'cgc_ub_condition_6_year', 10, 2 );
 
 
 function cgc_ub_condition_7_year( $return, $user_id ) {
@@ -701,4 +701,4 @@ function cgc_ub_condition_7_year( $return, $user_id ) {
 
 	return $return;
 }
-add_filter( 'cgc_ub_member_1_years', 'cgc_ub_condition_7_year', 10, 2 );
+add_filter( 'cgc_ub_member_7_years', 'cgc_ub_condition_7_year', 10, 2 );
