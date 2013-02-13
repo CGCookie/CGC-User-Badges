@@ -618,3 +618,87 @@ function cgc_ub_condition_1_year( $return, $user_id ) {
 	return $return;
 }
 add_filter( 'cgc_ub_member_1_years', 'cgc_ub_condition_1_year', 10, 2 );
+
+
+function cgc_ub_condition_2_year( $return, $user_id ) {
+
+	$return        = false;
+	$user_data     = get_userdata( $user_id );
+	$register_date = strtotime( $user_data->user_registered );
+
+	if( $register_date < strtotime( '-2 year' ) && $register_date > strtotime( '-3 years' ) )
+		$return = true;
+
+	return $return;
+}
+add_filter( 'cgc_ub_member_1_years', 'cgc_ub_condition_2_year', 10, 2 );
+
+
+function cgc_ub_condition_3_year( $return, $user_id ) {
+
+	$return        = false;
+	$user_data     = get_userdata( $user_id );
+	$register_date = strtotime( $user_data->user_registered );
+
+	if( $register_date < strtotime( '-3 year' ) && $register_date > strtotime( '-4 years' ) )
+		$return = true;
+
+	return $return;
+}
+add_filter( 'cgc_ub_member_1_years', 'cgc_ub_condition_3_year', 10, 2 );
+
+
+function cgc_ub_condition_4_year( $return, $user_id ) {
+
+	$return        = false;
+	$user_data     = get_userdata( $user_id );
+	$register_date = strtotime( $user_data->user_registered );
+
+	if( $register_date < strtotime( '-4 year' ) && $register_date > strtotime( '-5 years' ) )
+		$return = true;
+
+	return $return;
+}
+add_filter( 'cgc_ub_member_1_years', 'cgc_ub_condition_4_year', 10, 2 );
+
+
+function cgc_ub_condition_5_year( $return, $user_id ) {
+
+	$return        = false;
+	$user_data     = get_userdata( $user_id );
+	$register_date = strtotime( $user_data->user_registered );
+
+	if( $register_date < strtotime( '-5 year' ) && $register_date > strtotime( '-6 years' ) )
+		$return = true;
+
+	return $return;
+}
+add_filter( 'cgc_ub_member_1_years', 'cgc_ub_condition_5_year', 10, 2 );
+
+
+function cgc_ub_condition_6_year( $return, $user_id ) {
+
+	$return        = false;
+	$user_data     = get_userdata( $user_id );
+	$register_date = strtotime( $user_data->user_registered );
+
+	if( $register_date < strtotime( '-6 year' ) && $register_date > strtotime( '-7 years' ) )
+		$return = true;
+
+	return $return;
+}
+add_filter( 'cgc_ub_member_1_years', 'cgc_ub_condition_6_year', 10, 2 );
+
+
+function cgc_ub_condition_7_year( $return, $user_id ) {
+
+	$return        = false;
+	$user_data     = get_userdata( $user_id );
+	$register_date = strtotime( $user_data->user_registered );
+
+	if( $register_date < strtotime( '-7 year' ) && $register_date > strtotime( '-8 years' ) )
+		$return = true;
+
+	return $return;
+}
+add_filter( 'cgc_ub_member_1_years', 'cgc_ub_condition_7_year', 10, 2 );
