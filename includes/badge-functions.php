@@ -153,7 +153,14 @@ function cgc_ub_get_conditions() {
 			'won_community_vote' => __('Won the Community Vote', 'cgc_ub'),
 			'has_been_featured'  => __('Has Been Featured in Gallery', 'cgc_ub'),
 			'workshop_attendee'  => __('Attended a Workshop', 'cgc_ub'),
-			'has_gallery_images' => __('Has Gallery Images', 'cgc_ub')
+			'has_gallery_images' => __('Has Gallery Images', 'cgc_ub'),
+			'member_1_years'     => __( 'Member for One Year', 'cgc_ub' ),
+			'member_2_years'     => __( 'Member for Two Years', 'cgc_ub' ),
+			'member_3_years'     => __( 'Member for Three Years', 'cgc_ub' ),
+			'member_4_years'     => __( 'Member for Four Years', 'cgc_ub' ),
+			'member_5_years'     => __( 'Member for Five Years', 'cgc_ub' ),
+			'member_6_years'     => __( 'Member for Six Years', 'cgc_ub' ),
+			'member_7_years'     => __( 'Member for Seven Years', 'cgc_ub' )
 		)
 	);
 	return $conditions;
@@ -264,7 +271,7 @@ function cgc_ub_condition_is_author($return, $user_id) {
 	}
 	return $return;
 }
-add_filter('cgc_ub_is_author', 'cgc_ub_condition_is_author', 10, 2);
+add_filter('cgc_ub_condition_is_author', 'cgc_ub_is_author', 10, 2);
 
 // checks whether as user has had a featured iamge
 function cgc_ub_condition_has_been_featured($return, $user_id) {
@@ -597,3 +604,17 @@ function cgc_ub_condition_workshop_attendee( $return, $user_id ) {
 	return $return;
 }
 add_filter( 'cgc_ub_workshop_attendee', 'cgc_ub_condition_workshop_attendee', 10, 2 );
+
+
+function cgc_ub_condition_1_year( $return, $user_id ) {
+
+	$return        = false;
+	$user_data     = get_userdata( $user_id );
+	$register_date = strtotime( $user_data->user_registered );
+
+	if( $register_date < strtotime( '-1 year' ) && $register_date > strtotime( '-2 years' ) )
+		$return = true;
+
+	return $return;
+}
+add_filter( 'cgc_ub_member_1_years', 'cgc_ub_condition_1_year', 10, 2 );
