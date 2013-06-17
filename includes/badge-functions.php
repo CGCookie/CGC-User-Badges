@@ -57,7 +57,7 @@ function cgc_ub_insert_badge($data) {
 			if($key != 'cgc_ub_add_nonce' && $key != 'cgc_ub_action')
 			$badge[$key] = strip_tags(addslashes($value));
 		}
-		$save = edd_store_badge($badge);
+		$save = cgc_store_badge($badge);
 	}
 }
 add_action('cgc_ub_add_badge', 'cgc_ub_insert_badge');
@@ -69,7 +69,7 @@ function cgc_ub_edit_badge($data) {
 			if($key != 'cgc_ub_edit_nonce' && $key != 'cgc_ub_action' && $key != 'badge_id' && $key != 'cgc_ub_redirect')
 			$badge[$key] = strip_tags(addslashes($value));
 		}
-		if(edd_store_badge($badge, $data['badge_id'])) {
+		if(cgc_store_badge($badge, $data['badge_id'])) {
 			wp_redirect(add_query_arg('cgc-message', 'badge_updated', $data['cgc_ub_redirect'])); exit;
 		} else {
 			wp_redirect(add_query_arg('cgc-message', 'badge_update_failed', $data['cgc_ub_redirect'])); exit;
@@ -82,8 +82,8 @@ add_action('cgc_ub_edit_badge', 'cgc_ub_edit_badge');
 * Stores a badge.
 * If the badge exists, it updates it, otherwise it creates a new one
 */
-function edd_store_badge($badge_details, $id = null) {
-	if(edd_badge_exists($id) && !is_null($id)) { // update an existing discount
+function cgc_store_badge($badge_details, $id = null) {
+	if(cgc_badge_exists($id) && !is_null($id)) { // update an existing discount
 		$badges = cgc_ub_get_badges();
 		if(!$badges) $badges = array();
 		$badges[$id] = $badge_details;
@@ -122,7 +122,7 @@ function cgc_delete_badge($badge_id) {
 
 
 // checks to see if a badge already exists
-function edd_badge_exists($badge_id) {
+function cgc_badge_exists($badge_id) {
 	$badges = cgc_ub_get_badges();
 
 	if(!$badges) return false; // no badges, so does not exist
@@ -591,7 +591,7 @@ function cgc_ub_condition_workshop_attendee( $return, $user_id ) {
 
 		switch_to_blog(15);
 			global $wpdb;
-			$purchased = $wpdb->get_var( $wpdb->prepare( "SELECT DISTINCT meta_value FROM $wpdb->postmeta WHERE meta_key = '_edd_payment_user_email' AND meta_value = '%s'", $email) );
+			$purchased = $wpdb->get_var( $wpdb->prepare( "SELECT DISTINCT meta_value FROM $wpdb->postmeta WHERE meta_key = '_cgc_payment_user_email' AND meta_value = '%s'", $email) );
 			if( ! empty( $purchased ) ) {
 				$attended = true;
 			}
