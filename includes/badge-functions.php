@@ -257,6 +257,7 @@ function cgc_ub_user_meets_condition($user_id, $condition) {
 
 // checks whether a user is citizen
 function cgc_ub_condition_is_citizen($return, $user_id) {
+	$return = false;
 	if(cgc_check_for_citizen(1, $user_id)) {
 		$return = true;
 	}
