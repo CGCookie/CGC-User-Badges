@@ -58,7 +58,7 @@ function cgc_ub_admin_page() {
 										'edit' => '<a href="' . wp_nonce_url( add_query_arg('cgc_ub_page', 'edit_badge', add_query_arg('badge_id', $id)), 'cgc_ub_edit') . '">' . __('Edit', 'edd') . '</a>',
 										'delete' => '<a href="' . wp_nonce_url(add_query_arg('cgc_ub_action', 'delete_badge', add_query_arg('badge_id', $id)), 'cgc_ub_delete') . '">' . __('Delete', 'edd') . '</a>'
 									);
-									$row_actions = apply_filters('cgc_ub_badge_row_actions', $row_actions, $$badge);
+									$row_actions = apply_filters('cgc_ub_badge_row_actions', $row_actions, $badge);
 									$action_count = count($row_actions); $i = 1;
 									foreach($row_actions as $key => $action) {
 										if($action_count == $i) { $sep = ''; } else { $sep = ' | '; }
