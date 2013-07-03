@@ -718,4 +718,4 @@ function cgc_ub_condition_lifetime_member( $return, $user_id ) {
 
 	return $return;
 }
-add_filter( 'cgc_ub_member_lifetime_member', 'cgc_ub_condition_lifetime_member', 10, 2 );
+add_filter( 'cgc_ub_lifetime_member', 'cgc_ub_condition_lifetime_member', 10, 2 );
