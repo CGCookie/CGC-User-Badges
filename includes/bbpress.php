@@ -8,13 +8,8 @@ function cgc_ub_bbpress_badges() {
 
 	$reply_id = bbp_get_reply_id();
 
-	if( empty( $reply_id ) )
-		return;
-
 	$author_id = bbp_get_reply_author_id( $reply_id );
 
-	if( empty( $author_id ) )
-		return;
 
 	cgc_ub_show_user_badges( $author_id );
 }

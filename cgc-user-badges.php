@@ -6,7 +6,7 @@ Description: A badge system for users
 Version: 1.0
 Author: Pippin Williamson
 Contributors: mordauk
-Author URI: http://pippinspages.com 
+Author URI: http://pippinspages.com
 */
 
 if(!defined('CGC_UB_PLUGIN_DIR')) {
