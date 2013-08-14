@@ -22,7 +22,7 @@ function cgc_render_related_download_metabox() {
 	if( ! class_exists( 'Easy_Digital_Downloads' ) )
 		return;
 
-	$selected = get_post_meta( get_the_ID(), 'cgc_related_edd_productt', true );
+	$selected = get_post_meta( get_the_ID(), 'cgc_related_edd_product', true );
 
 	// Switch to hub site
 	switch_to_blog( 1 );
