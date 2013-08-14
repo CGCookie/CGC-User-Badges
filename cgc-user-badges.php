@@ -29,3 +29,4 @@ include_once(CGC_UB_PLUGIN_DIR . '/includes/actions.php');
 include_once(CGC_UB_PLUGIN_DIR . '/includes/ajax.php');
 include_once(CGC_UB_PLUGIN_DIR . '/includes/bbpress.php');
 include_once(CGC_UB_PLUGIN_DIR . '/includes/metabox.php');
+include_once(CGC_UB_PLUGIN_DIR . '/includes/edd.php');
