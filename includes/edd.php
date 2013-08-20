@@ -5,6 +5,10 @@
  * Only shown to moderators and admins
  */
 function cgc_ub_edd_purchased_badge( $post_id = 0, $user_id = 0 ) {
+
+	if( ! current_user_can( 'manage_options' ) )
+		return;
+
 	$related_product = get_post_meta( $post_id, 'cgc_related_edd_product', true );
 
 	if( empty( $related_product ) )
