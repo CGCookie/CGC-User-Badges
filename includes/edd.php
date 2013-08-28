@@ -11,7 +11,7 @@ function cgc_ub_edd_purchased_badge( $post_id = 0, $user_id = 0 ) {
 
 	$related_product = get_post_meta( $post_id, 'cgc_related_edd_product', true );
 
-	if( empty( $related_product ) )
+	if( empty( $related_product ) || $related_product < 0 )
 		return;
 
 	switch_to_blog( 1 );
