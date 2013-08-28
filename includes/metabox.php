@@ -70,6 +70,6 @@ function cgc_related_download_save( $post_id ) {
 	if( empty( $_POST['edd_products'] ) )
 		delete_post_meta( $post_id, 'cgc_related_edd_product' );
 	else
-		update_post_meta( $post_id, 'cgc_related_edd_product', absint( $_POST['edd_products'] ) );
+		update_post_meta( $post_id, 'cgc_related_edd_product', $_POST['edd_products'] );
 }
 add_action( 'save_post', 'cgc_related_download_save' );
