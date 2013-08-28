@@ -44,7 +44,7 @@ function cgc_render_related_download_metabox() {
 		$options[0] = __( 'No products found', 'edd' );
 	}
 
-	echo EDD()->select( array(
+	echo EDD()->html->select( array(
 		'name'             => 'edd_products',
 		'selected'         => $selected,
 		'options'          => $options,
