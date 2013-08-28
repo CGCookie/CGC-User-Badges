@@ -27,7 +27,30 @@ function cgc_render_related_download_metabox() {
 	// Switch to hub site
 	switch_to_blog( 1 );
 
-	echo EDD()->html->product_dropdown( 'edd_products', $selected );
+	$products = get_posts( array(
+		'post_type' => 'download',
+		'nopaging'  => true,
+		'orderby'   => 'title',
+		'order'     => 'ASC'
+	) );
+
+	$options = array();
+
+	if ( $products ) {
+		foreach ( $products as $product ) {
+			$options[ absint( $product->ID ) ] = esc_html( get_the_title( $product->ID ) );
+		}
+	} else {
+		$options[0] = __( 'No products found', 'edd' );
+	}
+
+	echo EDD()->select( array(
+		'name'             => 'edd_products',
+		'selected'         => $selected,
+		'options'          => $options,
+		'show_option_all'  => false,
+		'show_option_none' => __( 'None', 'edd' )
+	) );
 
 	restore_current_blog();
 
