@@ -214,7 +214,7 @@ function cgc_ub_show_user_badges( $user_id ) {
 	$conditional_badges = cgc_ub_get_users_conditional_badges( $user_id );
 	$manual_badges = cgc_ub_get_users_manual_badges( $user_id );
 	$badges = array_merge( $conditional_badges, $manual_badges );
-	$output = '<ul id="cgc_ub_user_badges" class="cgc_ub_user_badges_' . $user_id . '">';
+	$output = '<ul id="cgc_ub_user_badges" class="profile--badges cgc_ub_user_badges_' . $user_id . '">';
 	foreach ( $badges as $badge_id ) {
 		$badge = cgc_ub_get_badge( $badge_id );
 		$output .= '<li><img src="' . $badge['image'] . '" class="cgc_ub_badge no-loader" title="' . $badge['name'] . '"/></li>';
@@ -258,10 +258,15 @@ function cgc_ub_user_meets_condition( $user_id, $condition ) {
 
 // checks whether a user is citizen
 function cgc_ub_condition_is_citizen( $return, $user_id ) {
+
 	$return = false;
-	if ( cgc_check_for_citizen( 1, $user_id ) ) {
+
+	$check = class_exists('cgcUserAPI') ? cgcUserAPI::is_user_citizen( $user_id ) : false;
+
+	if ( $check ) {
 		$return = true;
 	}
+
 	return $return;
 }
 add_filter( 'cgc_ub_is_citizen', 'cgc_ub_condition_is_citizen', 10, 2 );
