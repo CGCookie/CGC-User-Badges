@@ -161,7 +161,8 @@ function cgc_ub_get_conditions() {
 			'member_5_years'     => __( 'Member for Five Years', 'cgc_ub' ),
 			'member_6_years'     => __( 'Member for Six Years', 'cgc_ub' ),
 			'member_7_years'     => __( 'Member for Seven Years', 'cgc_ub' ),
-			'lifetime_member'    => __( 'Lifetime Member', 'cgc_ub' )
+			'lifetime_member'    => __( 'Lifetime Member', 'cgc_ub' ),
+			'beta_user'    => __( 'Beta User', 'cgc_ub' )
 		)
 	);
 	return $conditions;
@@ -724,3 +725,16 @@ function cgc_ub_condition_lifetime_member( $return, $user_id ) {
 	return $return;
 }
 add_filter( 'cgc_ub_lifetime_member', 'cgc_ub_condition_lifetime_member', 10, 2 );
+
+// checks whether a user is a beta user
+function cgc_ub_beta_user( $return, $user_id ) {
+
+	if ( !class_exists('cgcUserAPI') )
+		return;
+
+	if ( true == cgcUserAPI::is_user_beta_user( $user_id ) ) {
+		$return = true;
+	}
+	return $return;
+}
+add_filter( 'cgc_ub_beta_user', 'cgc_ub_beta_user', 10, 2 );
