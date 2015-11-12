@@ -262,7 +262,7 @@ function cgc_ub_condition_is_citizen( $return, $user_id ) {
 
 	$return = false;
 
-	$check = class_exists('cgcUserAPI') ? cgcUserAPI::is_user_citizen( $user_id ) : false;
+	$check = class_exists('cgcUserApi') ? cgcUserApi::is_user_citizen( $user_id ) : false;
 
 	if ( $check ) {
 		$return = true;
@@ -611,7 +611,7 @@ function cgc_ub_condition_workshop_attendee( $return, $user_id ) {
 
 	return $return;
 }
-add_filter( 'cgc_ub_workshop_attendee', 'cgc_ub_condition_workshop_attendee', 10, 2 );
+//add_filter( 'cgc_ub_workshop_attendee', 'cgc_ub_condition_workshop_attendee', 10, 2 );
 
 
 function cgc_ub_condition_1_year( $return, $user_id ) {
@@ -729,10 +729,10 @@ add_filter( 'cgc_ub_lifetime_member', 'cgc_ub_condition_lifetime_member', 10, 2 
 // checks whether a user is a beta user
 function cgc_ub_beta_user( $return, $user_id ) {
 
-	if ( !class_exists('cgcUserAPI') )
+	if ( !class_exists('cgcUserApi') )
 		return;
 
-	if ( true == cgcUserAPI::is_user_beta_user( $user_id ) ) {
+	if ( true == cgcUserApi::is_user_beta_user( $user_id ) ) {
 		$return = true;
 	}
 	return $return;
