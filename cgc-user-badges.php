@@ -3,7 +3,7 @@
 Plugin Name: CG Cookie - User Badges
 Plugin URI: http://pippinsplugins.com/
 Description: A badge system for users
-Version: 5.0.1
+Version: 5.0.2
 Author: Pippin Williamson
 Contributors: mordauk
 Author URI: http://pippinspages.com
