@@ -262,13 +262,15 @@ function cgc_ub_condition_is_citizen( $return, $user_id ) {
 
 	$return = false;
 
-	$check = class_exists('cgcUserApi') ? cgcUserApi::is_user_citizen( $user_id ) : false;
+	$viewing_profile 	= class_exists('cgcFiveUserProfiles') && 'true' == cgcFiveUserProfiles::user_viewing_profile() && is_user_logged_in() ? true : false;
+	$profile_id 		= class_exists('cgcUserAPI') ? cgcUserAPI::get_profile_id() : false;
+	$user_id 			= $viewing_profile ? $profile_id : get_current_user_ID();
+
+	$check 				= class_exists('cgcUserApi') ? cgcUserApi::is_user_citizen( $profile_id ) : false;
 
 	if ( $check ) {
 		$return = true;
 	}
-
-	return $return;
 }
 add_filter( 'cgc_ub_is_citizen', 'cgc_ub_condition_is_citizen', 10, 2 );
 
